@@ -1,0 +1,1 @@
+DataSetLocation = "resources/SalaryDataset.csv"
