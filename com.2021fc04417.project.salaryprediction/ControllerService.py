@@ -41,8 +41,23 @@ def getSalaryPrediction(predRec,columns):
         print(w.original_sklearn_version)
 
     emp_id = db.saveEmployee(saveRec,role_id,level_id,predictedSalary)
+
+    message = ''
+    if(float(saveRec["Prev Salary"])>predictedSalary):
+        message = 'Candiate experience does not balance with the level of the role and salary'
+    elif(abs(float(saveRec["Prev Salary"])-predictedSalary)<100000):
+        message = 'Candiate just fits into the level of the role'
+    else:
+        message = 'Great Match'
+
+
+
     emp_name = saveRec["First Name"] +' '+saveRec["Last Name"]
-    dataObj = {'Employee_id': str(emp_id),'Employee_name': emp_name, 'Employee_role': str(predRec["Job Title"]), 'Level': str(predRec["Level"]),"Predicted Salary":predictedSalary}
-    resObj = {'Status': 'Employee saved successfully','Employee Data':dataObj}
+    dataObj = {'employeeId': str(emp_id),'employeeName': emp_name, 'employeeRole': str(predRec["Job Title"]), 'level': str(predRec["Level"]),"predictedSalary":predictedSalary,
+               'message':message}
+    resObj = {'Status': 'Employee saved successfully','employeeData':dataObj}
     response = json.dumps(resObj, indent=4)
-    return str(response)
+    return response
+
+def getRoles():
+    return db.getRoles()

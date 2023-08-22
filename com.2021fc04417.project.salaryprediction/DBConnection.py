@@ -32,7 +32,7 @@ def saveEmployee(record,role_id,level_id,predictedSalary):
     values=""
     for c in col:
         if(c not in ['Age','Years of Experience','Prev Salary']):
-            if(record[c]=='Master\'s' and c=='Education Level'):
+            if(record[c]=='Masters\'s' and c=='Education Level'):
                 values = values+"'Masters',"
             elif(record[c]=='Bachelor\'s' and c=='Education Level'):
                 values = values + "'Bachelors',"
@@ -47,3 +47,14 @@ def saveEmployee(record,role_id,level_id,predictedSalary):
     response = cursor.fetchone()[0]
     cursor.close()
     return response
+
+def getRoles():
+    rolesList = []
+    cursor = con.cursor()
+    statement = "SELECT role_name FROM roles;"
+    cursor.execute(statement)
+    response = cursor.fetchall()
+    cursor.close()
+    for r in response:
+        rolesList.append(r[0])
+    return rolesList
