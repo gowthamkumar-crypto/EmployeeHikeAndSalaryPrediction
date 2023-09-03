@@ -1,1 +1,2 @@
-DataSetLocation = "resources/SalaryDataset.csv"
+salaryDataSetLocation = "resources/SalaryDataset.csv"
+hikeDataSetLocation = "../resources/hikeDataset.csv"

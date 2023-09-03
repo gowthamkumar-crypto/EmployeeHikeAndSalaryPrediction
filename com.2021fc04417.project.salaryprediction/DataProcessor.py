@@ -1,8 +1,5 @@
-import numpy as np
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
-import CleanData as cd
-import ModelPreparation as mp
-import pandas as pd
+import SalaryModelPreparation as mp
 import pickle
 
 encoder_edu = LabelEncoder()

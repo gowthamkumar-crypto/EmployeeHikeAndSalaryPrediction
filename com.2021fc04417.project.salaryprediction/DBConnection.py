@@ -25,10 +25,10 @@ def getRoleIdByRoleName(role):
 
 
 
-def saveEmployee(record,role_id,level_id,predictedSalary):
+def saveCandiate(record, role_id, level_id, predictedSalary):
     cursor = con.cursor()
     col = ['First Name','Last Name','Age','Years of Experience','Email','gender', 'Location','Prev Salary','Education Level']
-    statement = "INSERT INTO public.employee(emp_first_name, emp_last_name, age, experience, email, gender, location, prev_salary, education, role_id, level_id,salary_predicted) VALUES ("
+    statement = "INSERT INTO public.candidate(candidate_first_name, candidate_last_name, age, experience, email, gender, location, prev_salary, education, role_id, level_id,salary_predicted) VALUES ("
     values=""
     for c in col:
         if(c not in ['Age','Years of Experience','Prev Salary']):
@@ -40,7 +40,7 @@ def saveEmployee(record,role_id,level_id,predictedSalary):
                 values = values + "'" + str(record[c]) + "',"
         else:
             values = values+str(record[c]) + ","
-    values = values+str(role_id) + "," + str(level_id) +"," +str(predictedSalary)+") RETURNING emp_id;"
+    values = values+str(role_id) + "," + str(level_id) +"," +str(predictedSalary)+") RETURNING cid;"
     insertStatement = statement+values
     cursor.execute(insertStatement)
     con.commit()
@@ -58,3 +58,11 @@ def getRoles():
     for r in response:
         rolesList.append(r[0])
     return rolesList
+
+def getEmployeeReviewDetails(empId):
+    cursor = con.cursor()
+    statement = "SELECT total_working_hours,actual_working_hours,job_involvement, over_time, assigned_story_points, spill_over_story_points, achivements, core_values FROM sprint_review where emp_id="+str(empId)+";"
+    cursor.execute(statement)
+    response = cursor.fetchall()
+    cursor.close()
+    return response

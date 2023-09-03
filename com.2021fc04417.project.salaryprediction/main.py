@@ -2,10 +2,11 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
 from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import numpy as np
 import pandas as pd
 import ControllerService as cs
+import HikeServie as hs
 
 
 app = Flask(__name__)
@@ -33,6 +34,10 @@ def sprintReview():
 @app.route("/login")
 def login():
   return jsonify({'success': 'ok'})
+
+@app.route("/hike/predict/<int:empId>", methods=['POST'])
+def hike(empId):
+    return jsonify(hs.getHikePrediction(request.json,empId))
 
 
 app.run(debug=True)

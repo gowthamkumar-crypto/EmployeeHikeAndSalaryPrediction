@@ -1,3 +1,4 @@
+import os
 import pickle
 import DataProcessor as dp
 import numpy as np
@@ -5,8 +6,10 @@ import pandas as pd
 import warnings
 from sklearn.exceptions import InconsistentVersionWarning
 warnings.simplefilter("error", InconsistentVersionWarning)
-import DBConnection as db
+import sys
 import json
+import DBConnection as db
+
 
 
 def getSalaryPrediction(predRec,columns):
@@ -40,7 +43,7 @@ def getSalaryPrediction(predRec,columns):
     except InconsistentVersionWarning as w:
         print(w.original_sklearn_version)
 
-    emp_id = db.saveEmployee(saveRec,role_id,level_id,predictedSalary)
+    emp_id = db.saveCandiate(saveRec, role_id, level_id, predictedSalary)
 
     message = ''
     if(float(saveRec["Prev Salary"])>predictedSalary):
